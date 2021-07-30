@@ -5,7 +5,6 @@ import { useQueryClient } from "react-query";
 import RepoDetails from "../components/RepoDetails";
 import SearchList from "../components/SearchList";
 import useGetRepos from "../hooks/useGetRepos";
-import getReposAxios from "../services/getRepos.axios";
 
 const SearchPage = () => {
   const [value, setValue] = React.useState("");
@@ -28,9 +27,7 @@ const SearchPage = () => {
     }
   };
 
-  const { isLoading, isError, data, refetch, isSuccess } = useGetRepos(() =>
-    getReposAxios(value)
-  );
+  const { isLoading, isError, data, refetch, isSuccess } = useGetRepos(value);
 
   return (
     <Box textAlign="center" fontSize="xl">
@@ -49,7 +46,6 @@ const SearchPage = () => {
           ) : (
             "No data found. Please search for repository"
           )}
-          {dataIdx && <RepoDetails item={(data as any).items[dataIdx]} />}
 
           {isError && "Error is displaying data."}
         </ul>

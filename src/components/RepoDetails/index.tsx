@@ -1,32 +1,38 @@
+import { Box, Stat, StatGroup, StatLabel, StatNumber } from "@chakra-ui/react";
 import * as React from "react";
-import { Stat, StatGroup, StatLabel, StatNumber, Box } from "@chakra-ui/react";
+import { useParams } from "react-router";
+import useGetRepos from "../../hooks/useGetRepos";
 
-const RepoDetails = ({item}: any) => {
-    console.log("INSIDE REPO DETAILS = ", item.forks_count);
+const RepoDetails = () => {
+  //@ts-ignore
+  const { name } = useParams();
+  const { data } = useGetRepos("getRepos");
+  const item = data?.items.filter((val: any) => val?.full_name === name);
+
   return (
     <StatGroup>
       <Stat>
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs">
           <StatLabel>Forks</StatLabel>
-          <StatNumber>{item?.forks_count}</StatNumber>
+          <StatNumber>{item[0]?.forks_count}</StatNumber>
         </Box>
       </Stat>
       <Stat>
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs">
           <StatLabel>Stars</StatLabel>
-          <StatNumber>{item?.stargazers_count}</StatNumber>
+          <StatNumber>{item[0]?.stargazers_count}</StatNumber>
         </Box>
       </Stat>
       <Stat>
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs">
           <StatLabel>Watchers</StatLabel>
-          <StatNumber>{item?.watchers_count}</StatNumber>
+          <StatNumber>{item[0]?.watchers_count}</StatNumber>
         </Box>
       </Stat>
       <Stat>
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs">
           <StatLabel>Open Issue Count</StatLabel>
-          <StatNumber>{item?.open_issues_count}</StatNumber>
+          <StatNumber>{item[0]?.open_issues_count}</StatNumber>
         </Box>
       </Stat>
     </StatGroup>

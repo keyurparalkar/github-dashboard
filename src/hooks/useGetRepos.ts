@@ -1,10 +1,10 @@
-import { QueryFunction, useQuery } from "react-query";
-import { TGetRepoAxiosFunc } from "../types/types.hooks";
+import { useQuery } from "react-query";
+import getReposAxios from "../services/getRepos.axios";
 
-const useGetRepos = (axiosHook: QueryFunction<null | TGetRepoAxiosFunc>) => {
+const useGetRepos = (value: string) => {
     const response= useQuery(
         "getRepos",
-        axiosHook,
+        () => getReposAxios(value),
         {
           enabled: false,
           refetchOnWindowFocus: false,
