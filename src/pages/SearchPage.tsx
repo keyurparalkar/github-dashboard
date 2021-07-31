@@ -2,13 +2,12 @@ import { Box, Grid, Input, Spinner } from "@chakra-ui/react";
 import _ from "lodash";
 import * as React from "react";
 import { useQueryClient } from "react-query";
-import RepoDetails from "../components/RepoDetails";
 import SearchList from "../components/SearchList";
 import useGetRepos from "../hooks/useGetRepos";
 
 const SearchPage = () => {
   const [value, setValue] = React.useState("");
-  const [dataIdx, setDataIdx] = React.useState<number | null>(null);
+  const [, setDataIdx] = React.useState<number | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -17,7 +16,7 @@ const SearchPage = () => {
     setValue(event.target.value);
 
     if (event.target.value !== "") {
-      const debounceTempCall = _.debounce(() => {
+      const debounceTempCall = _.debounce(  () => {
         refetch();
       }, 1000);
 
@@ -27,7 +26,7 @@ const SearchPage = () => {
     }
   };
 
-  const { isLoading, isError, data, refetch, isSuccess } = useGetRepos(value);
+  const { isLoading, isError, data, refetch, isSuccess} = useGetRepos(value);
 
   return (
     <Box textAlign="center" fontSize="xl">
@@ -41,11 +40,14 @@ const SearchPage = () => {
         />
         <ul>
           {isLoading && <Spinner />}
-          {isSuccess && data ? (
+          {isSuccess && 
+            (data ? <SearchList data={(data as any).items} selectItem={setDataIdx} /> : "No data found. Please search for repository")
+          }
+          {/* {!isLoading ? (
             <SearchList data={(data as any).items} selectItem={setDataIdx} />
           ) : (
             "No data found. Please search for repository"
-          )}
+          )} */}
 
           {isError && "Error is displaying data."}
         </ul>

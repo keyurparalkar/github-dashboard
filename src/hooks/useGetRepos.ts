@@ -4,13 +4,7 @@ import getReposAxios from "../services/getRepos.axios";
 const useGetRepos = (value: string) => {
     const response= useQuery(
         "getRepos",
-        () => getReposAxios(value),
-        {
-          enabled: false,
-          refetchOnWindowFocus: false,
-          initialData: null,
-          retry: false
-        }
+        () => getReposAxios(value)
       );
 
       return response;
