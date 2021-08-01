@@ -9,7 +9,7 @@ const getReposAxios = async (value: string) => {
     );
     return response.data;
   } catch (error: any) {
-    throw error;
+    throw error.response.data.message;
   }
 };
 

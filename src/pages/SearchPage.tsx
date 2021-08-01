@@ -43,11 +43,6 @@ const SearchPage = () => {
           {isSuccess && 
             (data ? <SearchList data={(data as any).items} selectItem={setDataIdx} /> : "No data found. Please search for repository")
           }
-          {/* {!isLoading ? (
-            <SearchList data={(data as any).items} selectItem={setDataIdx} />
-          ) : (
-            "No data found. Please search for repository"
-          )} */}
 
           {isError && "Error is displaying data."}
         </ul>
