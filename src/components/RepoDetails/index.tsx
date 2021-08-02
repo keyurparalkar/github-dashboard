@@ -3,40 +3,15 @@ import {
   Spinner,
   Stat,
   StatGroup,
-  StatHelpText,
   StatLabel,
   StatNumber,
 } from "@chakra-ui/react";
-import dayjs from "dayjs";
 import * as React from "react";
 import { useParams } from "react-router";
-import { Area, AreaChart, Legend, Tooltip, XAxis, YAxis } from "recharts";
 import useGetForks from "../../hooks/useGetForks";
 import useGetRepos from "../../hooks/useGetRepos";
 import { convertToDateValObject } from "../../Utils/chores.utils";
-
-const CustomToolTip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <Stat>
-        <Box
-          borderRadius="5px"
-          borderWidth="1px"
-          boxShadow="xs"
-          backgroundColor="white"
-          p={3}
-          pb={1}
-        >
-          <StatLabel>{dayjs(label).format("MMM D YYYY")}</StatLabel>
-          <StatNumber>{payload[0].value}</StatNumber>
-          <StatHelpText>Forks</StatHelpText>
-        </Box>
-      </Stat>
-    );
-  }
-
-  return null;
-};
+import AreaChartGraph from "../charts/AreaChartGraph";
 
 const RepoDetails = () => {
   //@ts-ignore
@@ -90,39 +65,18 @@ const RepoDetails = () => {
         </>
       )}
 
-      {forkData.isSuccess &&
-        JSON.stringify(convertToDateValObject(forkData.data))}
       {forkData.isSuccess && (
-        <AreaChart
+        <AreaChartGraph
+          chartData={areaChartData}
           width={800}
-          height={300}
-          data={areaChartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
+          height={400}
+          xDataKey="time"
+          yDataKey="value"
+          colors={{
+            stroke: "#50CB93",
+            fill: "#ACFFAD",
           }}
-        >
-          <XAxis
-            dataKey="time"
-            domain={["auto", "auto"]}
-            name="Time"
-            scale="time"
-            tickFormatter={(epochTime: number) =>
-              dayjs(epochTime).format("MM/DD")
-            }
-          />
-          <YAxis dataKey="value" />
-          <Tooltip content={<CustomToolTip />} />
-          <Legend />
-          <Area
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            fill="#8884d8"
-          />
-        </AreaChart>
+        />
       )}
     </div>
   );
