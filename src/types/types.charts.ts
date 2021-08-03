@@ -7,5 +7,6 @@ export interface IAreaChart {
     colors: {
         stroke: string;
         fill: string;
-    }
+    },
+    id: string;
 }

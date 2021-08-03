@@ -19,6 +19,7 @@ const AreaChartGraph = ({
   xDataKey,
   yDataKey,
   colors,
+  id
 }: IAreaChart) => {
   return (
     <ResponsiveContainer height={height}>
@@ -29,7 +30,7 @@ const AreaChartGraph = ({
         margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
       >
         <defs>
-          <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={colors.fill} stopOpacity={1} />
             <stop offset="20%" stopColor={colors.fill} stopOpacity={0.9} />
             <stop offset="50%" stopColor={colors.fill} stopOpacity={0.8} />
@@ -54,7 +55,9 @@ const AreaChartGraph = ({
           fillOpacity={1}
           dataKey={yDataKey}
           stroke={colors.stroke}
-          fill="url(#colorPv)"
+          fill={`url(#${id})`}
+          // fill={colors.fill}
+          // fill={`linear-gradient(${colors.fill} 100%, ${colors.fill} 20%)`}
         />
       </AreaChart>
     </ResponsiveContainer>
