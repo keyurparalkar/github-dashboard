@@ -9,4 +9,10 @@ export interface IAreaChart {
         fill: string;
     },
     id: string;
+    margin?: {
+        top?:number | 20;
+        bottom?:number | 0;
+        left?:number | 0;
+        right?:number | 40;
+    }
 }

@@ -19,7 +19,8 @@ const AreaChartGraph = ({
   xDataKey,
   yDataKey,
   colors,
-  id
+  id,
+  margin
 }: IAreaChart) => {
   return (
     <ResponsiveContainer height={height}>
@@ -27,7 +28,7 @@ const AreaChartGraph = ({
         width={width}
         height={height}
         data={chartData}
-        margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
+        margin={{...margin}}
       >
         <defs>
           <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">

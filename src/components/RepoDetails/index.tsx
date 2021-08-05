@@ -8,12 +8,13 @@ import {
   StatGroup,
   StatLabel,
   StatNumber,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useParams } from "react-router";
 import useGetForks from "../../hooks/useGetForks";
 import useGetIssues from "../../hooks/useGetIssues";
+import useGetReleases from "../../hooks/useGetReleases";
 import useGetRepos from "../../hooks/useGetRepos";
 import { convertToDateValObject, kFormatter } from "../../Utils/chores.utils";
 import AreaChartGraph from "../charts/AreaChartGraph";
@@ -32,8 +33,12 @@ const RepoDetails = () => {
   //Fetch Top 100 newest Issues combined with PR:
   const issuesData = useGetIssues(name);
 
+  //Fetch Top 100 newest releases:
+  const releasesData = useGetReleases(name);
+
   const forkChartsData = forkData.isSuccess && convertToDateValObject(forkData.data);
   const issuesChartData = issuesData.isSuccess && convertToDateValObject(issuesData.data);
+  const releasesChartData = releasesData.isSuccess && convertToDateValObject(releasesData.data);
 
   if (isLoading) return <h2>Loading {name} data...</h2>;
 
@@ -83,6 +88,8 @@ const RepoDetails = () => {
         </Stat>
       </StatGroup>
 
+
+      <br />
       {forkData.isLoading && (
         <>
           <Spinner />
@@ -109,6 +116,11 @@ const RepoDetails = () => {
               stroke: "#3a7290",
               fill: "#53b8bb"
             }}
+            margin={{
+              left:0,
+              right: 40,
+              top:20
+            }}
           />
         </Box>
       )}
@@ -132,6 +144,41 @@ const RepoDetails = () => {
             colors={{
               stroke: "#50CB93",
               fill: "#ACFFAD",
+            }}
+            margin={{
+              left:0,
+              right: 40,
+              top:20
+            }}
+          />
+        </Box>
+      )}
+      <br />
+
+      {forkData.isSuccess && (
+        <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
+          <Text fontSize="xx-large" fontWeight="thin">
+            Releases
+          </Text>
+          <Text fontSize="small" fontWeight="thin" color="gray.600">
+            Top 100 releases newest
+          </Text>
+          <AreaChartGraph
+            id="releases-graph"
+            chartData={releasesChartData}
+            width={800}
+            height={400}
+            xDataKey="time"
+            yDataKey="value"
+            colors={{
+              stroke: "#6155A6",
+              fill: "#C9CBFF",
+            }}
+
+            margin={{
+              left:0,
+              right: 40,
+              top:20
             }}
           />
         </Box>
