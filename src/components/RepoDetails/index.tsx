@@ -1,9 +1,11 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Container,
   Link,
   Spinner,
+  Stack,
   Stat,
   StatGroup,
   StatLabel,
@@ -12,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import useGetForks from "../../hooks/useGetForks";
 import useGetIssues from "../../hooks/useGetIssues";
 import useGetReleases from "../../hooks/useGetReleases";
@@ -22,6 +25,7 @@ import AreaChartGraph from "../charts/AreaChartGraph";
 const RepoDetails = () => {
   //@ts-ignore
   const { name } = useParams();
+  const history = useHistory();
   const { data, isSuccess, isLoading } = useGetRepos(name);
   const item = isSuccess
     ? (data as any)?.items.filter((val: any) => val?.full_name === name)[0]
@@ -46,12 +50,19 @@ const RepoDetails = () => {
 
   return (
     <Container maxW="container.xl">
+      <Stack direction="row" alignItems="center">
+        <Button 
+        leftIcon={<ArrowBackIcon fontSize="25px"/>} 
+        variant="ghost"
+        onClick={() => history.push("/")}
+        />
       <Text fontSize="xxx-large" fontWeight="hairline" p={5} pl={0}>
         {name}
-        <Link href={item?.html_url} isExternal pl={3}>
-          <ExternalLinkIcon mx="2px" />
-        </Link>
       </Text>
+        <Link href={item?.html_url} isExternal pl={3}>
+          <ExternalLinkIcon fontSize="25px"/>
+        </Link>
+      </Stack>
       <StatGroup display="flex">
         <Stat mr={5}>
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
