@@ -31,13 +31,15 @@ const RepoDetails = () => {
   const forkData = useGetForks(name);
 
   //Fetch Top 100 newest Issues combined with PR:
-  const issuesData = useGetIssues(name);
-
+  const issuesPrData = useGetIssues(name);
+  const issuesData = issuesPrData.isSuccess && issuesPrData.data.filter((item: any) => !item.hasOwnProperty("pull_request"));
+  const prData = issuesPrData.isSuccess && issuesPrData.data.filter((item: any) => item.hasOwnProperty("pull_request"));
   //Fetch Top 100 newest releases:
   const releasesData = useGetReleases(name);
 
   const forkChartsData = forkData.isSuccess && convertToDateValObject(forkData.data);
-  const issuesChartData = issuesData.isSuccess && convertToDateValObject(issuesData.data);
+  const issuesChartData = issuesPrData.isSuccess && convertToDateValObject(issuesData);
+  const prChartData = issuesPrData.isSuccess && convertToDateValObject(prData);
   const releasesChartData = releasesData.isSuccess && convertToDateValObject(releasesData.data);
 
   if (isLoading) return <h2>Loading {name} data...</h2>;
@@ -78,11 +80,20 @@ const RepoDetails = () => {
           </Box>
         </Stat>
 
+        <Stat mr={5}>
+          <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
+            <StatLabel fontSize="l">Issue Count</StatLabel>
+            <StatNumber fontSize="4xl">
+              {kFormatter(issuesData.length)}
+            </StatNumber>
+          </Box>
+        </Stat>
+
         <Stat>
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
-            <StatLabel fontSize="l">Open Issue Count</StatLabel>
+            <StatLabel fontSize="l">Pull requests</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(item?.open_issues_count)}
+              {kFormatter(prData.length)}
             </StatNumber>
           </Box>
         </Stat>
@@ -97,7 +108,7 @@ const RepoDetails = () => {
         </>
       )}
 
-      {issuesData.isSuccess && (
+      {issuesPrData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
           <Text fontSize="xx-large" fontWeight="thin">
             Issues
@@ -155,7 +166,37 @@ const RepoDetails = () => {
       )}
       <br />
 
-      {forkData.isSuccess && (
+      {issuesPrData.isSuccess && (
+        <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
+          <Text fontSize="xx-large" fontWeight="thin">
+            Pull Requests
+          </Text>
+          <Text fontSize="small" fontWeight="thin" color="gray.600">
+            Top pull requests
+          </Text>
+          <AreaChartGraph
+            id="pr-graph"
+            chartData={prChartData}
+            width={800}
+            height={400}
+            xDataKey="time"
+            yDataKey="value"
+            colors={{
+              stroke: "#3a7290",
+              fill: "#53b8bb"
+            }}
+
+            margin={{
+              left:0,
+              right: 40,
+              top:20
+            }}
+          />
+        </Box>
+      )}
+      <br />
+
+      {releasesData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
           <Text fontSize="xx-large" fontWeight="thin">
             Releases
@@ -171,8 +212,8 @@ const RepoDetails = () => {
             xDataKey="time"
             yDataKey="value"
             colors={{
-              stroke: "#6155A6",
-              fill: "#C9CBFF",
+              stroke: "#50CB93",
+              fill: "#ACFFAD",
             }}
 
             margin={{
