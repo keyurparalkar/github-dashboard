@@ -51,8 +51,8 @@ const RepoDetails = () => {
   return (
     <Container maxW="container.xl">
       <Stack direction="row" alignItems="center">
-        <Button 
-        leftIcon={<ArrowBackIcon fontSize="25px"/>} 
+        <Button
+        leftIcon={<ArrowBackIcon fontSize="25px"/>}
         variant="ghost"
         onClick={() => history.push("/")}
         />
