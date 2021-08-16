@@ -5,7 +5,7 @@ const getReposAxios = async (value: string) => {
     const response = await axios.get(
       `https://api.github.com/search/repositories?q=${encodeURIComponent(
         value
-      )}`
+      )}&per_page=6`
     );
     return response.data;
   } catch (error: any) {

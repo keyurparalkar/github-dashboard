@@ -1,24 +1,27 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
-  Box,
-  Button,
-  Grid,
-  Input,
+  Button, Grid,
+  GridItem, Input,
   InputGroup,
   InputLeftElement,
-  InputRightAddon,
+  InputRightAddon, Kbd,
   Spinner,
-  Text,
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import _ from "lodash";
 import * as React from "react";
 import { useQueryClient } from "react-query";
 import SearchList from "../components/SearchList";
 import useGetRepos from "../hooks/useGetRepos";
+import GithubIcon from "../icons/GithubIcon";
+import LinkedIcon from "../icons/LinkedInIcon";
+import TwitterIcon from "../icons/TwitterIcon";
 
 const SearchPage = () => {
   const [value, setValue] = React.useState("");
   const [, setDataIdx] = React.useState<number | null>(null);
+  const [, setShowTitle] = React.useState<boolean>(true);
 
   const queryClient = useQueryClient();
 
@@ -27,25 +30,61 @@ const SearchPage = () => {
     setValue(event.target.value);
   };
 
-  const handleClick =  () => {
+  const handleClick = () => {
     if (value !== "") {
       const debounceTempCall = _.debounce(() => {
         refetch();
+        setShowTitle(false);
       }, 1000);
 
       debounceTempCall();
     } else {
       queryClient.removeQueries("getRepos", { exact: true });
     }
-  }
-  
-  const { isLoading, isError, data, refetch, isSuccess, isFetched} = useGetRepos(value, {enabled: false});
+  };
+
+  const { isLoading, isError, data, refetch, isSuccess } = useGetRepos(value, {
+    enabled: false,
+  });
+
+  React.useEffect(() => {
+    if (isLoading || isSuccess) {
+      setShowTitle(false);
+    }
+  }, [isLoading, isSuccess]);
 
   return (
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        GITHUB DASHBOARD SEARCH RESPONSE
-        {isFetched && <Text fontSize="9xl">GRD</Text>}
+    <Grid
+      h="100vh"
+      templateColumns="repeat(3, 1fr)"
+      templateRows="60px repeat(3,1fr)"
+      gap={1}
+    >
+      <GridItem colSpan={3}>
+        <Stack
+         spacing={8}
+         align="center"
+         justify="flex-end"
+         direction="row"
+        //  pt={[4, 4, 0, 0]}
+        pt={2}
+        pr={4}
+        >
+        <GithubIcon />
+
+        <LinkedIcon />
+            <TwitterIcon />
+        </Stack>
+      </GridItem>
+
+      <GridItem colStart={2} colEnd={3} textAlign="center">
+        <Text fontSize="9xl">GRD</Text>
+        <Text fontSize="md" fontWeight="bold" color="gray.600">
+          Github repository dashboard
+        </Text>
+      </GridItem>
+
+      <GridItem colStart={2} colEnd={3}>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -56,16 +95,19 @@ const SearchPage = () => {
             value={value}
             onChange={handleChange}
             size="md"
+            borderRightColor="transparent"            
           />
           <InputRightAddon
-            pl={0}
+            pl={2}
             pr={0}
+            bgColor="transparent"
             children={
-              <Button colorScheme="teal" size="md"
-              onClick={handleClick}
-              >
+              <span>
+                <Kbd>ctrl</Kbd> + <Kbd mr={2}>K</Kbd>
+              <Button colorScheme="teal" size="md" onClick={handleClick}>
                 Search
               </Button>
+              </span>
             }
           />
         </InputGroup>
@@ -80,8 +122,8 @@ const SearchPage = () => {
 
           {isError && "Error is displaying data."}
         </ul>
-      </Grid>
-    </Box>
+      </GridItem>
+    </Grid>
   );
 };
 

@@ -54,7 +54,7 @@ const RepoDetails = () => {
         <Button
         leftIcon={<ArrowBackIcon fontSize="25px"/>}
         variant="ghost"
-        onClick={() => history.push("/")}
+        onClick={() => history.replace("/")}
         />
       <Text fontSize="xxx-large" fontWeight="hairline" p={5} pl={0}>
         {name}
