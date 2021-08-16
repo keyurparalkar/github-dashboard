@@ -9,17 +9,18 @@ const SearchList = (props: any) => {
     <>
       {props.data.map((item: any, idx: number) => (
         <LinkBox
-          maxW="md"
+          maxW="lg + 5px"
           borderWidth="1px"
           rounded="md"
-          p="5"
+          p="1"
+          pl="2"
           key={`key-${idx}`}
           onClick={() => {
             props.selectItem(idx);
             history.push(`/repo/${item?.full_name}`)
           }}
         >
-          <Heading size="md" my="2">
+          <Heading size="sm" my="2">
             <LinkOverlay href="#">{item?.full_name}</LinkOverlay>
           </Heading>
         </LinkBox>
