@@ -1,4 +1,4 @@
-import { ExternalLinkIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -19,17 +19,20 @@ import useGetForks from "../../hooks/useGetForks";
 import useGetIssues from "../../hooks/useGetIssues";
 import useGetReleases from "../../hooks/useGetReleases";
 import useGetRepos from "../../hooks/useGetRepos";
-import { convertToDateValObject, kFormatter } from "../../Utils/chores.utils";
+import { convertToDateValObject } from "../../Utils/chores.utils";
 import AreaChartGraph from "../charts/AreaChartGraph";
+import CounterFormatter from "../CountFormatter";
+
 
 const RepoDetails = () => {
   //@ts-ignore
   const { name } = useParams();
   const history = useHistory();
   const { data, isSuccess, isLoading } = useGetRepos(name);
-  const item = isSuccess
+  const item: any = isSuccess
     ? (data as any)?.items.filter((val: any) => val?.full_name === name)[0]
     : null;
+
 
   //Fetch Top 100 newest forks:
   const forkData = useGetForks(name);
@@ -68,7 +71,7 @@ const RepoDetails = () => {
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
             <StatLabel fontSize="l">Forks</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(item?.forks_count)}
+              <CounterFormatter num={item?.forks_count} />
             </StatNumber>
           </Box>
         </Stat>
@@ -77,7 +80,8 @@ const RepoDetails = () => {
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
             <StatLabel fontSize="l">Stars</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(item?.stargazers_count)}
+              {/* {kFormatter(item?.stargazers_count)} */}
+              <CounterFormatter num={item?.stargazers_count}/>
             </StatNumber>
           </Box>
         </Stat>
@@ -86,7 +90,8 @@ const RepoDetails = () => {
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
             <StatLabel fontSize="l">Watchers</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(item?.watchers_count)}
+              {/* {kFormatter(item?.watchers_count)} */}
+              <CounterFormatter num={item?.watchers_count}/>
             </StatNumber>
           </Box>
         </Stat>
@@ -95,7 +100,8 @@ const RepoDetails = () => {
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
             <StatLabel fontSize="l">Issue Count</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(issuesData.length)}
+              {/* {kFormatter(issuesData.length)} */}
+              <CounterFormatter num={issuesData.length}/>
             </StatNumber>
           </Box>
         </Stat>
@@ -104,7 +110,8 @@ const RepoDetails = () => {
           <Box p={3} borderRadius="5px" borderWidth="1px" boxShadow="xs">
             <StatLabel fontSize="l">Pull requests</StatLabel>
             <StatNumber fontSize="4xl">
-              {kFormatter(prData.length)}
+              {/* {kFormatter(prData.length)} */}
+              <CounterFormatter num={prData.length}/>
             </StatNumber>
           </Box>
         </Stat>

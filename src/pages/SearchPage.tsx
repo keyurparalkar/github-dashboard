@@ -1,10 +1,12 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
+  Box,
   Button, Grid,
   GridItem, Input,
   InputGroup,
   InputLeftElement,
   InputRightAddon, Kbd,
+  List,
   Spinner,
   Stack,
   Text
@@ -111,7 +113,7 @@ const SearchPage = () => {
             }
           />
         </InputGroup>
-        <ul>
+        <List position="absolute" w="33%" zIndex={10} backgroundColor="white">
           {isLoading && <Spinner />}
           {isSuccess &&
             (data ? (
@@ -121,7 +123,15 @@ const SearchPage = () => {
             ))}
 
           {isError && "Error is displaying data."}
-        </ul>
+        </List>
+      </GridItem>
+
+      <GridItem colSpan={3} rowStart={4}>
+        <Box id="bottom-shape" position="relative">
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320">
+          <path fill="#cacaca" fill-opacity="1" d="M0,32L0,160L120,160L120,0L240,0L240,224L360,224L360,32L480,32L480,288L600,288L600,192L720,192L720,320L840,320L840,96L960,96L960,96L1080,96L1080,128L1200,128L1200,288L1320,288L1320,96L1440,96L1440,320L1320,320L1320,320L1200,320L1200,320L1080,320L1080,320L960,320L960,320L840,320L840,320L720,320L720,320L600,320L600,320L480,320L480,320L360,320L360,320L240,320L240,320L120,320L120,320L0,320L0,320Z">
+            </path></svg>
+        </Box>
       </GridItem>
     </Grid>
   );
