@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  Grid,
   Link,
   Spinner,
   Stack,
@@ -52,7 +53,7 @@ const RepoDetails = () => {
   if (isLoading) return <h2>Loading {name} data...</h2>;
 
   return (
-    <Container maxW="container.xl">
+    <Container maxW="90vw">
       <Stack direction="row" alignItems="center">
         <Button
         leftIcon={<ArrowBackIcon fontSize="25px"/>}
@@ -117,8 +118,7 @@ const RepoDetails = () => {
         </Stat>
       </StatGroup>
 
-
-      <br />
+      <br/>
       {forkData.isLoading && (
         <>
           <Spinner />
@@ -126,7 +126,12 @@ const RepoDetails = () => {
         </>
       )}
 
-      {issuesPrData.isSuccess && (
+      <Grid
+      templateColumns="repeat(2, 1fr)"
+      templateRows="repeat(2,1fr)"
+      gap={5}
+      >
+{issuesPrData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
           <Text fontSize="xx-large" fontWeight="thin">
             Issues
@@ -137,7 +142,7 @@ const RepoDetails = () => {
           <AreaChartGraph
             id="issue-graph"
             chartData={issuesChartData}
-            width={800}
+            width={400}
             height={400}
             xDataKey="time"
             yDataKey="value"
@@ -155,7 +160,7 @@ const RepoDetails = () => {
           />
         </Box>
       )}
-      <br />
+      
 
       {forkData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
@@ -168,7 +173,7 @@ const RepoDetails = () => {
           <AreaChartGraph
             id="fork-graph"
             chartData={forkChartsData }
-            width={800}
+            width={400}
             height={400}
             xDataKey="time"
             yDataKey="value"
@@ -185,7 +190,7 @@ const RepoDetails = () => {
           />
         </Box>
       )}
-      <br />
+      
 
       {issuesPrData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
@@ -217,7 +222,7 @@ const RepoDetails = () => {
           />
         </Box>
       )}
-      <br />
+      
 
       {releasesData.isSuccess && (
         <Box borderRadius="5px" borderWidth="1px" boxShadow="xs" p={2}>
@@ -248,7 +253,8 @@ const RepoDetails = () => {
           />
         </Box>
       )}
-      <br />
+      </Grid>
+
     </Container>
   );
 };
