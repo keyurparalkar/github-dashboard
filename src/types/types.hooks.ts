@@ -1,0 +1,1 @@
+export type TGetRepoAxiosFunc = (value: string) => void;
