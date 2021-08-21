@@ -6,10 +6,10 @@ const useBarAnimation = (yVal: number, delay?: number) => {
 
   const props = useSpring({
     to: { y: yVal },
-    from: { y: 0 },
+    from: { y: -50 },
     reset: true,
     reverse: flip,
-    delay: delay ? delay : 20,
+    delay: delay ? delay : 10,
     config: config.molasses,
     onRest: () => set(!flip),
   });
