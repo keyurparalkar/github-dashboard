@@ -16,7 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: codecov/codecov-action@v2
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -30,6 +29,7 @@ jobs:
       run: yarn run test -- --coverage
 
     - name: Upload coverage to Codecov
-      run: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v2
+
 
 
