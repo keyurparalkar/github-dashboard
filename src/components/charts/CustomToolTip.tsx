@@ -7,9 +7,9 @@ import {
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import * as React from "react";
-import { TooltipProps } from "recharts";
+import { TCustomToolTip } from "../../types/types.charts";
 
-const CustomToolTip = ({ active, payload, label }: TooltipProps<(string|number)[], number>) => {
+const CustomToolTip = ({ active, payload, label, toolTipText}: TCustomToolTip) => {
   if (active && payload && payload.length) {
     return (
       <Stat>
@@ -23,7 +23,7 @@ const CustomToolTip = ({ active, payload, label }: TooltipProps<(string|number)[
         >
           <StatLabel>{dayjs(label).format("MMM D YYYY")}</StatLabel>
           <StatNumber>{payload[0].value}</StatNumber>
-          <StatHelpText>Forks</StatHelpText>
+          <StatHelpText>{toolTipText}</StatHelpText>
         </Box>
       </Stat>
     );

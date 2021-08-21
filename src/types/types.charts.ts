@@ -1,3 +1,5 @@
+import { TooltipProps } from "recharts";
+
 export interface IAreaChart {
     chartData: any[] | undefined;
     width: number | undefined;
@@ -14,5 +16,9 @@ export interface IAreaChart {
         bottom?:number | 0;
         left?:number | 0;
         right?:number | 40;
-    }
+    },
+    tipText: string
 }
+
+
+export type TCustomToolTip = TooltipProps<(string|number)[], number> & {toolTipText: string};

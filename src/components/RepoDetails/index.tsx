@@ -150,6 +150,8 @@ const RepoDetails = () => {
               right: 40,
               top:20
             }}
+
+            tipText="Issues"
           />
         </Box>
       )}
@@ -179,6 +181,7 @@ const RepoDetails = () => {
               right: 40,
               top:20
             }}
+            tipText="Forks"
           />
         </Box>
       )}
@@ -209,6 +212,8 @@ const RepoDetails = () => {
               right: 40,
               top:20
             }}
+
+            tipText="PRs"
           />
         </Box>
       )}
@@ -239,6 +244,7 @@ const RepoDetails = () => {
               right: 40,
               top:20
             }}
+            tipText="Releases"
           />
         </Box>
       )}

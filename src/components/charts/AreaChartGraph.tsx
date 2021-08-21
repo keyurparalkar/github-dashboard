@@ -20,7 +20,8 @@ const AreaChartGraph = ({
   yDataKey,
   colors,
   id,
-  margin
+  margin,
+  tipText
 }: IAreaChart) => {
   return (
     <ResponsiveContainer height={height}>
@@ -49,7 +50,7 @@ const AreaChartGraph = ({
           }
         />
         <YAxis dataKey={yDataKey} />
-        <Tooltip content={<CustomToolTip />} />
+        <Tooltip content={<CustomToolTip toolTipText={tipText} />} />
         <Legend />
         <Area
           type="linear"
