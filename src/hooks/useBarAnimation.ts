@@ -9,7 +9,7 @@ const useBarAnimation = (yVal: number, delay?: number) => {
     from: { y: 0 },
     reset: true,
     reverse: flip,
-    delay: delay ? delay : 20,
+    delay: delay ? delay : 10,
     config: config.molasses,
     onRest: () => set(!flip),
   });
