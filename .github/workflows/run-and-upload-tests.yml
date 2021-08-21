@@ -1,0 +1,31 @@
+name: Run and upload test to codecov
+
+on:
+  push:
+    branches: [ main, dev, feature/ui-development ]
+  pull_request:
+    branches: [ main, dev, feature/ui-development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Run the tests and generate coverage report
+      run: yarn run test -- --coverage
+
+    - name: Upload coverage to Codecov
+      run: codecov/codecov-action@v1
+
+
