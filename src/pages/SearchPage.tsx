@@ -6,7 +6,7 @@ import SvgGraphs from "../components/SvgGraphs";
 const SearchPage = () => {
   return (
     <>
-      <GridItem colStart={2} colEnd={3} textAlign="center">
+      <GridItem colSpan={3} textAlign="center">
         <Text fontSize="9xl">GRD</Text>
         <Text fontSize="md" fontWeight="bold" color="gray.600">
           Github repository dashboard

@@ -3,6 +3,7 @@ import * as React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header";
 import RepoDetails from "./components/RepoDetails";
+import CompareRepos from "./pages/CompareRepos";
 import SearchPage from "./pages/SearchPage";
 
 const Routing = () => {
@@ -22,6 +23,10 @@ const Routing = () => {
 
         <Route path="/repo/:name+">
           <RepoDetails />
+        </Route>
+
+        <Route path="/compare-repos">
+          <CompareRepos />
         </Route>
         </Grid>
       </Switch>
