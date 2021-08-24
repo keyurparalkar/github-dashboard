@@ -16,7 +16,6 @@ const SearchList = (props: any) => {
           pl="2"
           key={`key-${idx}`}
           onClick={() => {
-            props.selectItem(idx);
             history.push(`/repo/${item?.full_name}`)
           }}
         >
